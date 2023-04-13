@@ -5,6 +5,9 @@
 #include <algorithm>
 #include <string>
 #include <iterator>
+#include <future>
+#include <thread>
+
 
 struct Data{
 
@@ -38,13 +41,16 @@ int main()
 {
     Data data;
     std::string temp;
+    double finish;
     
     std::getline(std::cin, temp);
     string_to_vector(data, temp);
 
     make_spaces(data);
     change_to_ONP(data);
-    std::cout << result(data) << " <- Result" << std::endl;
+    std::future<double> fin = std::async(result, std::ref(data));
+    finish = fin.get();
+    std::cout << finish << " <- Result" << std::endl;
 
 }
 
